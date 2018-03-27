@@ -1,0 +1,5 @@
+.htaccess FILE:
+RewriteEngine On
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.matthewhallberg\.com$ [NC]
+RewriteRule ^(.*)$ https://www.matthewhallberg.com/$1 [L,R=301]

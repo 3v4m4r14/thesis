@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- Style
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <script src="tracking.js-master/build/tracking-min.js"></script>
+    <script src="tracking.js-master/build/data/face-min.js"></script>
+
+    <style>
+        video, canvas {
+            margin-left: 230px;
+            margin-top: 120px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+
+<body style="position: relative">
+<div id="numOfFaces">NULL!</div>
+
+<div class="demo-frame">
+    <div class="demo-container">
+        <video id="video" width="320" height="240" preload autoplay loop muted></video>
+    </div>
+</div>
+<h3 id="target" style="color: red; margin: 0; padding: 0; left: 200px; top: 200px; font-size: 48px;">X</h3>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+<script src="xLabs/xlabs-demo/api/xlabs.js" type="text/javascript"></script>
+
+
+<script>
+    window.onload = function() {
+        var objects = new tracking.ObjectTracker('face');
+        objects.setInitialScale(4);
+        objects.setStepSize(2);
+        objects.setEdgesDensity(0.1);
+        tracking.track('#video', objects, { camera: true });
+        objects.on('track', function(event) {
+            $('#numOfFaces').text(event.data.length);
+        });
+    };
+</script>
+
+
+<script type="text/javascript">
+
+
+    // var Demo = {
+    //
+    //     update: function () {
+    //         var x = xLabs.getConfig("state.gaze.estimate.x");
+    //         var y = xLabs.getConfig("state.gaze.estimate.y");
+    //         var targetElement = document.getElementById("target");
+    //         // console.log(x, y);
+    //         targetElement.style.left = (x) + "px";
+    //         targetElement.style.top = (y) + "px";
+    //         targetElement.style.position = "absolute";
+    //     },
+    //
+    //     ready: function () {
+    //         // xLabs.setConfig( "calibration.clear", "1" ); // this also clears the memory buffer
+    //         xLabs.setConfig("system.mode", "learning");
+    //         xLabs.setConfig("browser.canvas.paintHeadPose", "0");
+    //
+    //         window.addEventListener( "beforeunload", function() {
+    //             xLabs.setConfig( "system.mode", "off" );
+    //         });
+    //     }
+    //
+    // };
+    //
+    // xLabs.setup(Demo.ready, Demo.update, null, "a4518618-0fe6-4877-91b8-086fdc66e76c");
+</script>
+
+
+
+
+</body>
+</html>
