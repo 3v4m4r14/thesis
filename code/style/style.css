@@ -1,0 +1,23 @@
+body {
+    position: relative;
+}
+
+video, canvas {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    /*visibility: hidden;*/
+    opacity: 1;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#target {
+    position: absolute;
+    z-index: 99;
+    color: red;
+    margin: 0;
+    padding: 0;
+    left: 200px;
+    top: 200px;
+    font-size: 48px;
+}
