@@ -25,20 +25,20 @@ var imgUrl = null;
 
 //https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 (function () {
-    var width = 320;    // We will scale the photo width to this
-    var height = 0;     // This will be computed based on the input stream
+    var kairosWidth = 620;    // We will scale the photo width to this
+    var kairosHeight = 0;     // This will be computed based on the input stream
 
     var streaming = false;
 
     var video = null;
-    var canvas = null;
+    var kairosCanvas = null;
     var photo = null;
     var startbutton = null;
 
     function startup() {
 
         video = document.getElementById('kairos-video');
-        canvas = document.getElementById('kairos-canvas');
+        kairosCanvas = document.getElementById('kairos-canvas');
         photo = document.getElementById('photo');
         startbutton = document.getElementById('startbutton');
 
@@ -72,19 +72,19 @@ var imgUrl = null;
 
         video.addEventListener('canplay', function (ev) {
             if (!streaming) {
-                height = video.videoHeight / (video.videoWidth / width);
+                kairosHeight = video.videoHeight / (video.videoWidth / kairosWidth);
 
                 // Firefox currently has a bug where the height can't be read from
                 // the video, so we will make assumptions if this happens.
 
-                if (isNaN(height)) {
-                    height = width / (4 / 3);
+                if (isNaN(kairosHeight)) {
+                    kairosHeight = kairosWidth / (4 / 3);
                 }
 
-                video.setAttribute('width', width);
-                video.setAttribute('height', height);
-                canvas.setAttribute('width', width);
-                canvas.setAttribute('height', height);
+                video.setAttribute('width', kairosWidth);
+                video.setAttribute('height', kairosHeight);
+                kairosCanvas.setAttribute('width', kairosWidth);
+                kairosCanvas.setAttribute('height', kairosHeight);
                 streaming = true;
             }
         }, false);
@@ -93,20 +93,6 @@ var imgUrl = null;
             takepicture();
             ev.preventDefault();
         }, false);
-
-        clearphoto();
-    }
-
-
-// Fill the photo with an indication that none has been
-// captured.
-    function clearphoto() {
-        var context = canvas.getContext('2d');
-        context.fillStyle = '#AAA';
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        imgUrl = canvas.toDataURL('image/png');
-        photo.setAttribute('src', imgUrl);
     }
 
 
@@ -116,17 +102,17 @@ var imgUrl = null;
 // drawing that to the screen, we can change its size and/or apply
 // other changes before drawing it.
     function takepicture() {
-        var context = canvas.getContext('2d');
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(video, 0, 0, width, height);
+        var context = kairosCanvas.getContext('2d');
+        if (kairosWidth && kairosHeight) {
+            kairosCanvas.width = kairosWidth;
+            kairosCanvas.height = kairosHeight;
+            context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
 
-            var data = canvas.toDataURL('image/png');
-            data = data.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+            var data = kairosCanvas.toDataURL('image/png');
+            // data = data.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
             console.log(data);
             photo.setAttribute('src', data);
-            payload  = { 'image' : imgUrl };
+            payload  = { 'image' : data };
             $.ajax(url, {
                 headers  : headers,
                 type: 'POST',
@@ -136,7 +122,6 @@ var imgUrl = null;
                 console.log(response);
             });
         } else {
-            clearphoto();
         }
     }
 
