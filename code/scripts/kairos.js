@@ -98,7 +98,6 @@ var imgUrl = null;
 
             var data = canvas.toDataURL('image/png');
             // console.log(data);
-            window.location.href=data;
             photo.setAttribute('src', data);
             $.ajax(url, {
                 headers  : headers,
@@ -127,7 +126,7 @@ var headers = {
 
 var payload  = { 'image' : imgUrl };
 
-var url = 'http://api.kairos.com/detect';
+var url = 'https://api.kairos.com/detect';
 
 // make request
 // $.ajax(url, {
