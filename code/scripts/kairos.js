@@ -1,46 +1,31 @@
 // put your keys in the header
 var headers = {
-    'Content-type'     : 'application/json',
-    'app_id'          : '4c8f8aa8',
-    'app_key'         : 'e117e2461afdc18a805dacb80599cd89'
+    'Content-type': 'application/json',
+    'app_id': '4c8f8aa8',
+    'app_key': 'e117e2461afdc18a805dacb80599cd89'
 };
 
-var payload  = { 'image' : imgUrl };
+var payload = null;
 
 var url = 'https://api.kairos.com/detect';
 
-// make request
-// $.ajax(url, {
-//     headers  : headers,
-//     type: 'POST',
-//     data: JSON.stringify(payload),
-//     dataType: 'text'
-// }).done(function(response){
-//     console.log(response);
-// });
 
-
-
-var imgUrl = null;
 
 //https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 (function () {
-    var kairosWidth = 620;    // We will scale the photo width to this
+    var canvas = document.getElementById('canvas');
+    var kairosWidth = canvas.width;    // We will scale the photo width to this
     var kairosHeight = 0;     // This will be computed based on the input stream
 
     var streaming = false;
 
     var video = null;
     var kairosCanvas = null;
-    var photo = null;
-    var startbutton = null;
 
     function startup() {
 
-        video = document.getElementById('kairos-video');
-        kairosCanvas = document.getElementById('kairos-canvas');
-        photo = document.getElementById('photo');
-        startbutton = document.getElementById('startbutton');
+        video = document.getElementById('video');
+        kairosCanvas = document.getElementById('canvas');
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -66,11 +51,11 @@ var imgUrl = null;
                 video.play();
             },
             function (err) {
-                console.log("An error occured! " + err);
+                console.log('An error occured! ' + err);
             }
         );
 
-        video.addEventListener('canplay', function (ev) {
+        video.addEventListener('canplay', function () {
             if (!streaming) {
                 kairosHeight = video.videoHeight / (video.videoWidth / kairosWidth);
 
@@ -89,10 +74,9 @@ var imgUrl = null;
             }
         }, false);
 
-        startbutton.addEventListener('click', function (ev) {
+        setInterval(function () {
             takepicture();
-            ev.preventDefault();
-        }, false);
+        }, 10000);
     }
 
 
@@ -103,30 +87,25 @@ var imgUrl = null;
 // other changes before drawing it.
     function takepicture() {
         var context = kairosCanvas.getContext('2d');
-        if (kairosWidth && kairosHeight) {
-            kairosCanvas.width = kairosWidth;
-            kairosCanvas.height = kairosHeight;
-            context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
+        context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
 
-            var data = kairosCanvas.toDataURL('image/png');
-            // data = data.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
-            console.log(data);
-            photo.setAttribute('src', data);
-            payload  = { 'image' : data };
-            $.ajax(url, {
-                headers  : headers,
-                type: 'POST',
-                data: JSON.stringify(payload),
-                dataType: 'text'
-            }).done(function(response){
-                console.log(response);
-            });
-        } else {
-        }
+        var data = kairosCanvas.toDataURL('image/png');
+
+        payload = {'image': data};
+        $.ajax(url, {
+            headers: headers,
+            type: 'POST',
+            data: JSON.stringify(payload),
+            dataType: 'text'
+        }).done(function (response) {
+            console.log(response);
+        });
+
     }
 
-// Set up our event listener to run the startup process
+    // Set up our event listener to run the startup process
     // once loading is complete.
     window.addEventListener('load', startup, false);
 })();
+
 
