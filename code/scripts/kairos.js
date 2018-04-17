@@ -1,3 +1,25 @@
+// put your keys in the header
+var headers = {
+    'Content-type'     : 'application/json',
+    'app_id'          : '4c8f8aa8',
+    'app_key'         : 'e117e2461afdc18a805dacb80599cd89'
+};
+
+var payload  = { 'image' : imgUrl };
+
+var url = 'https://api.kairos.com/detect';
+
+// make request
+// $.ajax(url, {
+//     headers  : headers,
+//     type: 'POST',
+//     data: JSON.stringify(payload),
+//     dataType: 'text'
+// }).done(function(response){
+//     console.log(response);
+// });
+
+
 
 var imgUrl = null;
 
@@ -35,7 +57,11 @@ var imgUrl = null;
                     video.mozSrcObject = stream;
                 } else {
                     var vendorURL = window.URL || window.webkitURL;
-                    video.src = vendorURL.createObjectURL(stream);
+                    try {
+                        video.srcObject = stream;
+                    } catch (error) {
+                        video.src = vendorURL.createObjectURL(stream);
+                    }
                 }
                 video.play();
             },
@@ -97,8 +123,10 @@ var imgUrl = null;
             context.drawImage(video, 0, 0, width, height);
 
             var data = canvas.toDataURL('image/png');
-            // console.log(data);
+            data = data.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+            console.log(data);
             photo.setAttribute('src', data);
+            payload  = { 'image' : imgUrl };
             $.ajax(url, {
                 headers  : headers,
                 type: 'POST',
@@ -117,23 +145,3 @@ var imgUrl = null;
     window.addEventListener('load', startup, false);
 })();
 
-// put your keys in the header
-var headers = {
-    'Content-type'     : 'application/json',
-    'app_id'          : '4c8f8aa8',
-    'app_key'         : 'e117e2461afdc18a805dacb80599cd89'
-};
-
-var payload  = { 'image' : imgUrl };
-
-var url = 'https://api.kairos.com/detect';
-
-// make request
-// $.ajax(url, {
-//     headers  : headers,
-//     type: 'POST',
-//     data: JSON.stringify(payload),
-//     dataType: 'text'
-// }).done(function(response){
-//     console.log(response);
-// });
