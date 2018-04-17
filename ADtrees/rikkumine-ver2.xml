@@ -1,0 +1,295 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="disjunctive">
+		<label>Eksamikorra
+rikkumine</label>
+		<node refinement="conjunctive">
+			<label>Kehastusrünne</label>
+			<node refinement="disjunctive" switchRole="yes">
+				<label>Isikutuvastus</label>
+				<node refinement="disjunctive">
+					<label>Isikut tõendav
+dokument</label>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>Isiku kohta
+valetamine</label>
+						<node refinement="disjunctive">
+							<label>Võltsdokument</label>
+							<node refinement="disjunctive" switchRole="yes">
+								<label>Kiibiga
+dokumendiga
+sisse logimine</label>
+							</node>
+						</node>
+						<node refinement="disjunctive">
+							<label>Sarnane välimus</label>
+						</node>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Kasutajanimi
+ja parool</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Kasutajanime ja
+parooli jagamine</label>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Ülikooli poolt
+antud võti</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Võtme
+jagamine</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Biomeetria</label>
+					<node refinement="disjunctive">
+						<label>Füüsiline</label>
+						<node refinement="disjunctive">
+							<label>Näotuvastus</label>
+							<node refinement="disjunctive" switchRole="yes">
+								<label>Kaamera suunatud
+kandidaadi poole.
+Testi lahendab
+kaamera vaateväljast
+eemal asuv isik.</label>
+								<node refinement="disjunctive" switchRole="yes">
+									<label>Näo vastavus
+tegevusele</label>
+									<node refinement="disjunctive">
+										<label>Näoilme</label>
+										<node refinement="disjunctive" switchRole="yes">
+											<label>Topeltekraan</label>
+											<node refinement="disjunctive" switchRole="yes">
+												<label>Lisaekraani
+tuvastus ja
+keelamine</label>
+											</node>
+										</node>
+									</node>
+									<node refinement="disjunctive">
+										<label>Silmade liikumise
+ja fookuspunkti
+jälgimine</label>
+										<node refinement="disjunctive" switchRole="yes">
+											<label>Topeltekraan</label>
+											<node refinement="disjunctive" switchRole="yes">
+												<label>Lisaekraani
+tuvastus ja
+keelamine</label>
+											</node>
+										</node>
+									</node>
+								</node>
+							</node>
+						</node>
+						<node refinement="disjunctive">
+							<label>Hääletuvastus</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Iirisetuvastus</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Sõrmejälg</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Peopesa
+veenid</label>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>Käitumuslik</label>
+						<node refinement="disjunctive">
+							<label>Trükkimise
+dünaamika</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Hiire
+kasutusviis</label>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>Kergbiomeetria</label>
+					</node>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>Taasesitusrünne</label>
+						<node refinement="disjunctive" switchRole="yes">
+							<label>Elavuse
+kontroll</label>
+							<node refinement="disjunctive">
+								<label>Silmade liikumise
+ja fookuspunkti
+jälgimine</label>
+							</node>
+							<node refinement="disjunctive">
+								<label>Pea
+liikumise
+jälgimine</label>
+							</node>
+						</node>
+					</node>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive">
+			<label>Juhiste saamine
+väljastpoolt</label>
+			<node refinement="disjunctive">
+				<label>Internetist
+lahenduskäigu
+otsimine</label>
+				<node refinement="disjunctive" switchRole="yes">
+					<label>&quot;Meepoti&quot;
+lehekülg</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Kõrvaline
+isik
+ruumis</label>
+				<node refinement="disjunctive" switchRole="yes">
+					<label>Video
+analüüs</label>
+					<node refinement="disjunctive">
+						<label>Inimkõne
+tuvastamine</label>
+					</node>
+					<node refinement="disjunctive">
+						<label>Näotuvastus</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Lisaseadme
+kasutamine</label>
+				<node refinement="disjunctive">
+					<label>Kõrvaklapid</label>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>Inimkõne
+tuvastamine</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Arvuti</label>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>Trükkimisheli
+kostumine
+klaviatuuri sisendi
+puudumisel</label>
+						<node refinement="disjunctive" switchRole="yes">
+							<label>Topelttrükkimine</label>
+						</node>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Nutitelefon</label>
+				</node>
+				<node refinement="conjunctive" switchRole="yes">
+					<label>Lisaseadme
+tuvastamine
+videopildilt</label>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Suhtlusprogramm</label>
+				<node refinement="disjunctive" switchRole="yes">
+					<label>Väliste
+rakenduste
+keelamine</label>
+					<node refinement="disjunctive">
+						<label>Lukustusbrauser</label>
+						<node refinement="disjunctive" switchRole="yes">
+							<label>Virtuaalmasin</label>
+							<node refinement="conjunctive">
+								<label>Suhtlusprogramm
+RangeForce
+virtuaalmasinas</label>
+								<node refinement="conjunctive" switchRole="yes">
+									<label>RangeForce
+virtuaalmasina
+logifailid</label>
+								</node>
+							</node>
+							<node refinement="conjunctive">
+								<label>Lukustusbrauseri
+jooksutamine
+virtuaalmasinas</label>
+								<node refinement="conjunctive" switchRole="yes">
+									<label>Virtuaalmasinas
+käivitumise
+avastamine</label>
+								</node>
+							</node>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>Kuvapildi
+tekstituvastus</label>
+					</node>
+					<node refinement="disjunctive">
+						<label>Protsesside
+jälgimine</label>
+					</node>
+				</node>
+			</node>
+			<node refinement="disjunctive">
+				<label>Ekraani
+jagamine</label>
+				<node refinement="conjunctive">
+					<label>Ekraanijagamis-
+programm</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Lukustusbrauser</label>
+						<node refinement="disjunctive" switchRole="yes">
+							<label>Virtuaalmasin</label>
+							<node refinement="conjunctive">
+								<label>Jagamisprogramm
+RangeForce
+virtuaalmasinas</label>
+								<node refinement="conjunctive" switchRole="yes">
+									<label>RangeForce
+virtuaalmasina
+logifailid</label>
+								</node>
+							</node>
+							<node refinement="conjunctive">
+								<label>Lukustusbrauseri
+jooksutamine
+virtuaalmasinas</label>
+								<node refinement="conjunctive" switchRole="yes">
+									<label>Virtuaalmasinas
+käivitumise
+avastamine</label>
+								</node>
+							</node>
+						</node>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Väline
+kaamera</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Ruumi
+pildianalüüs</label>
+					</node>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive" switchRole="yes">
+			<label>Kontrollitud
+keskkond</label>
+			<node refinement="conjunctive">
+				<label>Eksamikeskus</label>
+			</node>
+			<node refinement="conjunctive">
+				<label>360-kraadine
+ülevaade ruumist</label>
+			</node>
+			<node refinement="disjunctive">
+				<label>Vaatleja
+olemasolu</label>
+			</node>
+		</node>
+	</node>
+</adtree>

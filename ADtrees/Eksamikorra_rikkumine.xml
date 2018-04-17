@@ -1,0 +1,102 @@
+<?xml version='1.0'?>
+<adtree>
+	<node refinement="conjunctive">
+		<label>Eksamikorra
+rikkumine</label>
+		<node refinement="conjunctive">
+			<label>Kehastusrünne</label>
+			<node refinement="disjunctive" switchRole="yes">
+				<label>Isikutuvastus</label>
+				<node refinement="disjunctive">
+					<label>Isikut tõendav
+dokument</label>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>PETMINE</label>
+						<node refinement="disjunctive">
+							<label>Võltsdokument</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Sarnane välimus</label>
+						</node>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Kasutajanimi
+ja parool</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Kasutajanime ja
+parooli jagamine</label>
+					</node>
+				</node>
+				<node refinement="conjunctive">
+					<label>Ülikooli poolt
+antud võti</label>
+					<node refinement="conjunctive" switchRole="yes">
+						<label>Võtme
+jagamine</label>
+					</node>
+				</node>
+				<node refinement="disjunctive">
+					<label>Biomeetria</label>
+					<node refinement="disjunctive">
+						<label>Füüsiline</label>
+						<node refinement="disjunctive">
+							<label>Näotuvastus</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Hääletuvastus</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Iirisetuvastus</label>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>Käitumuslik</label>
+						<node refinement="disjunctive">
+							<label>Trükkimise
+dünaamika</label>
+						</node>
+						<node refinement="disjunctive">
+							<label>Hiire
+kasutusviis</label>
+						</node>
+					</node>
+					<node refinement="disjunctive">
+						<label>Kergbiomeetria</label>
+					</node>
+					<node refinement="disjunctive" switchRole="yes">
+						<label>Taasesitusrünne</label>
+						<node refinement="disjunctive" switchRole="yes">
+							<label>Elavuse
+kontroll</label>
+							<node refinement="disjunctive">
+								<label>Silmade liikumise
+ja fookuspunkti
+jälgimine</label>
+							</node>
+							<node refinement="disjunctive">
+								<label>Pea liikumise
+jälgimine</label>
+							</node>
+						</node>
+					</node>
+				</node>
+			</node>
+		</node>
+		<node refinement="disjunctive" switchRole="yes">
+			<label>Kontrollitud
+ruum</label>
+			<node refinement="conjunctive">
+				<label>Eksamikeskus</label>
+			</node>
+			<node refinement="conjunctive">
+				<label>360-kraadine
+ülevaade ruumist</label>
+			</node>
+			<node refinement="disjunctive">
+				<label>Vaatleja
+olemasolu</label>
+			</node>
+		</node>
+	</node>
+</adtree>
