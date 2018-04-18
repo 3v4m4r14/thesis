@@ -7,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Invigilation</title>
 
     <!-- Style
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -25,41 +25,75 @@
 
 <body>
 
-<!-- Bootstrap modal -->
-<div id="severalFacesModal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Please make sure you are alone</h5>
-            </div>
-            <div class="modal-body">
-                <p>We identified another face in your video frame. This is not allowed.<br>Please make sure you are the
-                    only person in front of the screen.</p>
-                <p>This warning might also be triggered by a colourful or detailed background. To avoid seeing this
-                    message again, move to somewhere with a plain background.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">I am alone now</button>
+<h3 id="target">X</h3>
+
+<div class="container-fluid">
+
+    <!-- Bootstrap modal -->
+    <div id="severalFacesModal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please make sure you are alone</h5>
+                </div>
+                <div class="modal-body">
+                    <p>We identified another face in your video frame. This is not allowed.<br>Please make sure you are
+                        the
+                        only person in front of the screen.</p>
+                    <p>This warning might also be triggered by a colourful or detailed background. To avoid seeing this
+                        message again, move to somewhere with a plain background.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal">I am alone now</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <button onclick="turnOverlayOn()" type="button">click me</button>
+
+    <div class="row">
+        <div class="col-md-2">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="row">Faces (tracking.js)</th>
+                    <td id="numOfFacesTrackingJs">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Faces (Kairos)</th>
+                    <td id="numOfFacesKairos">unknown</td>
+                </tr>
+                <tr>
+                    <th scope="row">Speaking</th>
+                    <td id="speakingStatus">false</td>
+                </tr>
+                <tr>
+                    <th scope="row">Gender (Kairos)</th>
+                    <td id="genderKairos">unknown</td>
+                </tr>
+                </tbody
+                <tr>
+                    <th scope="row">Glasses (Kairos)</th>
+                    <td id="glassesKairos">unknown</td>
+                </tr>>
+            </table>
+        </div>
+    </div>
+
+
+    <video id="video" class="video-feed" width="320" height="240" preload autoplay loop muted></video>
+    <canvas id="canvas" width="320" height="240"></canvas>
+
+    <div class="camera">
+        <video id="kairos-video">Video stream not available.</video>
+    </div>
+    <canvas id="kairos-canvas">
+    </canvas>
+
 </div>
-
-<button onclick="turnOverlayOn()" type="button">click me</button>
-
-<div id="numOfFaces">NULL!</div>
-
-<h3 id="target">X</h3>
-
-<video id="video" class="video-feed" width="320" height="240" preload autoplay loop muted></video>
-<canvas id="canvas" width="320" height="240"></canvas>
-
-<div class="camera">
-    <video id="kairos-video">Video stream not available.</video>
-</div>
-<canvas id="kairos-canvas">
-</canvas>
 
 <!-- Scripts
 –––––––––––––––––––––––––––––––––––––––––––––––––– -->

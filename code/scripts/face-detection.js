@@ -17,7 +17,7 @@ window.onload = function () {
             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
         });
 
-        $('#numOfFaces').text(event.data.length);
+        $('#numOfFacesTrackingJs').text(event.data.length);
         if (event.data.length > 1) {
             // turnOverlayOn();
         }

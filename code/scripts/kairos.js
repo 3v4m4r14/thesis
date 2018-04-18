@@ -14,29 +14,18 @@ var url = 'https://api.kairos.com/detect';
 //https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 (function () {
     var canvas = document.getElementById('canvas');
-    var kairosWidth = canvas.width;    // We will scale the photo width to this
-    var kairosHeight = 0;     // This will be computed based on the input stream
-
-    var streaming = false;
-
-    var video = null;
-    var kairosCanvas = null;
+    var kairosWidth = canvas.width;
+    var kairosHeight = canvas.height;
+    var video = document.getElementById('video');
 
     function startup() {
-
-        video = document.getElementById('video');
-        kairosCanvas = document.getElementById('canvas');
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
 
-        navigator.getMedia(
-            {
-                video: true,
-                audio: false
-            },
+        navigator.getMedia({video: true, audio: false},
             function (stream) {
                 if (navigator.mozGetUserMedia) {
                     video.mozSrcObject = stream;
@@ -55,28 +44,10 @@ var url = 'https://api.kairos.com/detect';
             }
         );
 
-        video.addEventListener('canplay', function () {
-            if (!streaming) {
-                kairosHeight = video.videoHeight / (video.videoWidth / kairosWidth);
-
-                // Firefox currently has a bug where the height can't be read from
-                // the video, so we will make assumptions if this happens.
-
-                if (isNaN(kairosHeight)) {
-                    kairosHeight = kairosWidth / (4 / 3);
-                }
-
-                video.setAttribute('width', kairosWidth);
-                video.setAttribute('height', kairosHeight);
-                kairosCanvas.setAttribute('width', kairosWidth);
-                kairosCanvas.setAttribute('height', kairosHeight);
-                streaming = true;
-            }
-        }, false);
-
+        takepicture();
         setInterval(function () {
             takepicture();
-        }, 10000);
+        }, 5000);
     }
 
 
@@ -86,10 +57,10 @@ var url = 'https://api.kairos.com/detect';
 // drawing that to the screen, we can change its size and/or apply
 // other changes before drawing it.
     function takepicture() {
-        var context = kairosCanvas.getContext('2d');
+        var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
 
-        var data = kairosCanvas.toDataURL('image/png');
+        var data = canvas.toDataURL('image/png');
 
         payload = {'image': data};
         $.ajax(url, {
@@ -98,7 +69,7 @@ var url = 'https://api.kairos.com/detect';
             data: JSON.stringify(payload),
             dataType: 'text'
         }).done(function (response) {
-            console.log(response);
+            showKairosData(response);
         });
 
     }
@@ -109,3 +80,31 @@ var url = 'https://api.kairos.com/detect';
 })();
 
 
+function showKairosData(response) {
+    var parsed = JSON.parse(response);
+
+    if (parsed.images !== null && parsed.images !== undefined) {
+
+        var faces = parsed.images[0].faces;
+        $('#numOfFacesKairos').text(faces.length);
+
+        showFacesData(faces);
+
+    } else if (parsed.Errors !== null) {
+        console.log("Error: " + parsed.Errors.Message);
+
+        $('#numOfFacesKairos').text('0');
+        $('#genderKairos').text('unknown');
+        $('#glassesKairos').text('unknown');
+    }
+}
+
+function showFacesData(faces) {
+    if (faces.length === 1) {
+        var person = faces[0];
+        $('#genderKairos').text(person.attributes.gender.type);
+        $('#glassesKairos').text(person.attributes.glasses);
+    } else {
+        turnOverlayOn();
+    }
+}
