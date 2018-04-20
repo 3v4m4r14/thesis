@@ -75,12 +75,20 @@ var candidate_id = "";
     function kairosGalleryView() {
         kairos.viewSubjectsInGallery("thesis_gallery", function (response) {
             console.log(response.responseText);
+            var parsed = JSON.parse(response.responseText);
+            if (parsed.Errors !== null && parsed.Errors !== undefined) {
+                $('#feedbackMsg').text(parsed.Errors[0].Message);
+            }
         });
     }
 
     function kairosGalleryRemove() {
         kairos.removeGallery("thesis_gallery", function (response) {
             console.log(response.responseText);
+            var parsed = JSON.parse(response.responseText);
+            if (parsed.Errors !== null && parsed.Errors !== undefined) {
+                $('#feedbackMsg').text(parsed.Errors[0].Message);
+            }
         });
     }
 
@@ -141,8 +149,11 @@ function showDetectData(response) {
         showFacesData(faces);
 
     } else if (parsed.Errors !== null) {
-        console.log("Error: " + parsed.Errors.Message);
+        console.log(parsed);
+        var detErr = parsed.Errors[0].Message;
+        console.log("Error: " + detErr);
 
+        $('#feedbackMsg').text(detErr);
         $('#numOfFacesKairos').text('0');
         $('#genderKairos').text('unknown');
         $('#glassesKairos').text('unknown');
@@ -160,8 +171,10 @@ function showEnrollData(response) {
         showPersonData(face);
 
     } else if (parsed.Errors !== null) {
-        console.log("Error: " + parsed.Errors[0].Message);
+        var enrErr = parsed.Errors[0].Message
+        console.log("Error: " + enrErr);
 
+        $('#feedbackMsg').text(enrErr);
         $('#numOfFacesKairos').text('0');
         $('#genderKairos').text('unknown');
         $('#glassesKairos').text('unknown');
@@ -178,6 +191,7 @@ function showFacesData(faces) {
 }
 
 function showPersonData(person) {
+    $('#feedbackMsg').text("-");
     $('#numOfFacesKairos').text('1');
     $('#genderKairos').text(person.attributes.gender.type);
     $('#glassesKairos').text(person.attributes.glasses);
@@ -197,24 +211,18 @@ function showRecognitionResult(response) {
             var candidate = candidates[0].subject_id;
             var confidence = candidates[0].confidence;
             console.log(candidate + ":" + confidence);
-            $('#recognitionKairos').text(candidate + " (" + confidence + ")");
+            $('#feedbackMsg').text(candidate + " (" + confidence + ")");
         }
         if (transactionMessage !== null && transactionMessage !== undefined) {
             console.log("Recognition error: " + transactionMessage);
-            $('#recognitionKairos').text(transactionMessage);
+            $('#feedbackMsg').text(transactionMessage);
         }
-
-
-        // console.log(candidates[0]);
-        // for (var i = 0; i < candidates.length; i++) {
-        //     console.log(candidates[i]);
-        // }
 
     } else if (parsed.Errors !== null) {
         var recError = parsed.Errors[0].Message;
         console.log("Error: " + recError);
 
-        $('#recognitionKairos').text(recError);
+        $('#feedbackMsg').text(recError);
         $('#numOfFacesKairos').text('unknown');
         $('#genderKairos').text('unknown');
         $('#glassesKairos').text('unknown');
