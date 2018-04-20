@@ -1,18 +1,9 @@
-// put your keys in the header
-var headers = {
-    'Content-type': 'application/json',
-    'app_id': '4c8f8aa8',
-    'app_key': 'e117e2461afdc18a805dacb80599cd89'
-};
-
 // instantiates a new instance of the Kairos client
 var kairos = new Kairos('4c8f8aa8', 'e117e2461afdc18a805dacb80599cd89');
 
-var payload = null;
-
-var url = 'https://api.kairos.com/detect';
-
 var candidate_id = "";
+
+
 
 //https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 (function () {
@@ -22,8 +13,6 @@ var candidate_id = "";
     var video = document.getElementById('video');
 
     function startup() {
-
-        kairosGalleryRemove();
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -56,7 +45,7 @@ var candidate_id = "";
     }
 
 
-    function kairosDetectFaces() {
+    function kairosDetect() {
         var image = getImageFromCanvas();
         kairos.detect(image, showDetectData);
     }
@@ -67,28 +56,27 @@ var candidate_id = "";
     }
 
 
-    function kairosRecognisePost() {
+    function kairosRecognize() {
         var image = getImageFromCanvas();
         kairos.recognize(image, "thesis_gallery", showRecognitionResult);
     }
 
-    function kairosGalleryView() {
-        kairos.viewSubjectsInGallery("thesis_gallery", function (response) {
+    function kairosVerify() {
+        var image = getImageFromCanvas();
+        kairos.verify(image, "thesis_gallery", candidate_id, function (response) {
             console.log(response.responseText);
-            var parsed = JSON.parse(response.responseText);
-            if (parsed.Errors !== null && parsed.Errors !== undefined) {
-                $('#feedbackMsg').text(parsed.Errors[0].Message);
-            }
+        })
+    }
+
+    function kairosViewSubjectsInGallery() {
+        kairos.viewSubjectsInGallery("thesis_gallery", function (response) {
+            showErrors(response);
         });
     }
 
-    function kairosGalleryRemove() {
+    function kairosRemoveGallery() {
         kairos.removeGallery("thesis_gallery", function (response) {
-            console.log(response.responseText);
-            var parsed = JSON.parse(response.responseText);
-            if (parsed.Errors !== null && parsed.Errors !== undefined) {
-                $('#feedbackMsg').text(parsed.Errors[0].Message);
-            }
+            showErrors(response);
         });
     }
 
@@ -96,25 +84,27 @@ var candidate_id = "";
     function getImageFromCanvas() {
         var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
-
         return canvas.toDataURL('image/png');
     }
 
     $('#kairosDetect').click(function () {
-        kairosDetectFaces();
+        kairosDetect();
     });
 
     $('#kairosEnroll').click(function () {
         kairosEnroll();
     });
     $('#kairosRecognise').click(function () {
-        kairosRecognisePost();
+        kairosRecognize();
+    });
+    $('#kairosVerify').click(function () {
+        kairosVerify();
     });
     $('#kairosGalleryView').click(function () {
-        kairosGalleryView();
+        kairosViewSubjectsInGallery();
     });
     $('#kairosGalleryRemove').click(function () {
-        kairosGalleryRemove();
+        kairosRemoveGallery();
     });
     $('#loginBtn').click(function () {
         candidate_id = $('#candidateEmail').val();
@@ -132,6 +122,7 @@ var candidate_id = "";
     // Set up our event listener to run the startup process
     // once loading is complete.
     window.addEventListener('load', startup, false);
+    window.addEventListener('beforeunload', kairosRemoveGallery, false)
 })();
 
 
@@ -171,7 +162,7 @@ function showEnrollData(response) {
         showPersonData(face);
 
     } else if (parsed.Errors !== null) {
-        var enrErr = parsed.Errors[0].Message
+        var enrErr = parsed.Errors[0].Message;
         console.log("Error: " + enrErr);
 
         $('#feedbackMsg').text(enrErr);
@@ -229,6 +220,13 @@ function showRecognitionResult(response) {
     }
 }
 
+function showErrors(response) {
+    console.log(response.responseText);
+    var parsed = JSON.parse(response.responseText);
+    if (parsed.Errors !== null && parsed.Errors !== undefined) {
+        $('#feedbackMsg').text(parsed.Errors[0].Message);
+    }
+}
 
 function validEmail(email)
 {
