@@ -52,12 +52,46 @@
         </div>
     </div>
 
-    <button onclick="turnOverlayOn()" type="button">click me</button>
+    <div id="registrationModal" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please enter your credentials</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="candidateEmail">Email address</label>
+                            <input type="email" class="form-control" id="candidateEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+                            <small id="emailHelp" class="form-text"></small>
+                        </div>
+                        <!--<div class="form-group">-->
+                            <!--<label for="exampleInputPassword1">Password</label>-->
+                            <!--<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
+                        <!--</div>-->
+                        <button id="loginBtn" type="button" class="btn btn-primary">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="kairosDetect" type="button">kairos detect</button>
+    <button id="kairosEnroll" type="button">kairos enroll</button>
+    <button id="kairosRecognise" type="button">kairos recognise</button>
+    <button id="kairosGalleryView" type="button">kairos gallery view</button>
+    <button id="kairosGalleryRemove" type="button">kairos gallery remove</button>
 
     <div class="row">
         <div class="col-md-2">
             <table class="table">
                 <tbody>
+                <tr>
+                    <th scope="row">Candidate</th>
+                    <td id="candidateId">unknown</td>
+                </tr>
                 <tr>
                     <th scope="row">Faces (tracking.js)</th>
                     <td id="numOfFacesTrackingJs">unknown</td>
@@ -67,6 +101,10 @@
                     <td id="numOfFacesKairos">unknown</td>
                 </tr>
                 <tr>
+                    <th scope="row">Recognition (Kairos)</th>
+                    <td id="recognitionKairos">-</td>
+                </tr>
+                <tr>
                     <th scope="row">Speaking</th>
                     <td id="speakingStatus">false</td>
                 </tr>
@@ -74,11 +112,11 @@
                     <th scope="row">Gender (Kairos)</th>
                     <td id="genderKairos">unknown</td>
                 </tr>
-                </tbody
                 <tr>
                     <th scope="row">Glasses (Kairos)</th>
                     <td id="glassesKairos">unknown</td>
-                </tr>>
+                </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -106,10 +144,11 @@
         crossorigin="anonymous"></script>
 
 <script src="code/xlabs-demo-master/xlabs-demo-master/api/xlabs.js" type="text/javascript"></script>
+<script src="code/Kairos-SDK-Javascript-master/kairos.js" type="text/javascript"></script>
 
 <script src="code/scripts/other.js" type="text/javascript"></script>
 <script src="code/scripts/face-detection.js" type="text/javascript"></script>
-<!--<script src="scripts/gaze-tracking.js" type="text/javascript"></script>-->
+<!--<script src="code/scripts/gaze-tracking.js" type="text/javascript"></script>-->
 <script src="code/scripts/kairos.js" type="text/javascript"></script>
 <script src="code/scripts/speech.js" type="text/javascript"></script>
 

@@ -5,11 +5,14 @@ var headers = {
     'app_key': 'e117e2461afdc18a805dacb80599cd89'
 };
 
+// instantiates a new instance of the Kairos client
+var kairos = new Kairos('4c8f8aa8', 'e117e2461afdc18a805dacb80599cd89');
+
 var payload = null;
 
 var url = 'https://api.kairos.com/detect';
 
-
+var candidate_id = "";
 
 //https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos
 (function () {
@@ -19,6 +22,8 @@ var url = 'https://api.kairos.com/detect';
     var video = document.getElementById('video');
 
     function startup() {
+
+        kairosGalleryRemove();
 
         navigator.getMedia = (navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -44,35 +49,77 @@ var url = 'https://api.kairos.com/detect';
             }
         );
 
-        takepicture();
+        // kairosDetectFaces();
         setInterval(function () {
-            takepicture();
-        }, 5000);
+            // kairosDetectFaces();
+        }, 10000);
     }
 
 
-// Capture a photo by fetching the current contents of the video
-// and drawing it into a canvas, then converting that to a PNG
-// format data URL. By drawing it on an offscreen canvas and then
-// drawing that to the screen, we can change its size and/or apply
-// other changes before drawing it.
-    function takepicture() {
+    function kairosDetectFaces() {
+        var image = getImageFromCanvas();
+        kairos.detect(image, showDetectData);
+    }
+
+    function kairosEnroll() {
+        var image = getImageFromCanvas();
+        kairos.enroll(image, "thesis_gallery", candidate_id, showEnrollData);
+    }
+
+
+    function kairosRecognisePost() {
+        var image = getImageFromCanvas();
+        kairos.recognize(image, "thesis_gallery", showRecognitionResult);
+    }
+
+    function kairosGalleryView() {
+        kairos.viewSubjectsInGallery("thesis_gallery", function (response) {
+            console.log(response.responseText);
+        });
+    }
+
+    function kairosGalleryRemove() {
+        kairos.removeGallery("thesis_gallery", function (response) {
+            console.log(response.responseText);
+        });
+    }
+
+
+    function getImageFromCanvas() {
         var context = canvas.getContext('2d');
         context.drawImage(video, 0, 0, kairosWidth, kairosHeight);
 
-        var data = canvas.toDataURL('image/png');
-
-        payload = {'image': data};
-        $.ajax(url, {
-            headers: headers,
-            type: 'POST',
-            data: JSON.stringify(payload),
-            dataType: 'text'
-        }).done(function (response) {
-            showKairosData(response);
-        });
-
+        return canvas.toDataURL('image/png');
     }
+
+    $('#kairosDetect').click(function () {
+        kairosDetectFaces();
+    });
+
+    $('#kairosEnroll').click(function () {
+        kairosEnroll();
+    });
+    $('#kairosRecognise').click(function () {
+        kairosRecognisePost();
+    });
+    $('#kairosGalleryView').click(function () {
+        kairosGalleryView();
+    });
+    $('#kairosGalleryRemove').click(function () {
+        kairosGalleryRemove();
+    });
+    $('#loginBtn').click(function () {
+        candidate_id = $('#candidateEmail').val();
+        if (validEmail(candidate_id)) {
+            $('#candidateId').text(candidate_id);
+            $('#registrationModal').modal('hide');
+            kairosEnroll();
+        } else {
+            $('#emailHelp').text("Invalid email.").css("color", "red");
+
+        }
+    });
+
 
     // Set up our event listener to run the startup process
     // once loading is complete.
@@ -80,8 +127,11 @@ var url = 'https://api.kairos.com/detect';
 })();
 
 
-function showKairosData(response) {
-    var parsed = JSON.parse(response);
+
+
+
+function showDetectData(response) {
+    var parsed = JSON.parse(response.responseText);
 
     if (parsed.images !== null && parsed.images !== undefined) {
 
@@ -99,12 +149,81 @@ function showKairosData(response) {
     }
 }
 
+function showEnrollData(response) {
+    var parsed = JSON.parse(response.responseText);
+
+    if (parsed.images !== null && parsed.images !== undefined) {
+
+        var face = parsed.images[0];
+        $('#numOfFacesKairos').text(face.length);
+
+        showPersonData(face);
+
+    } else if (parsed.Errors !== null) {
+        console.log("Error: " + parsed.Errors[0].Message);
+
+        $('#numOfFacesKairos').text('0');
+        $('#genderKairos').text('unknown');
+        $('#glassesKairos').text('unknown');
+    }
+}
+
 function showFacesData(faces) {
     if (faces.length === 1) {
         var person = faces[0];
-        $('#genderKairos').text(person.attributes.gender.type);
-        $('#glassesKairos').text(person.attributes.glasses);
+        showPersonData(person);
     } else {
         turnOverlayOn();
     }
+}
+
+function showPersonData(person) {
+    $('#numOfFacesKairos').text('1');
+    $('#genderKairos').text(person.attributes.gender.type);
+    $('#glassesKairos').text(person.attributes.glasses);
+}
+
+function showRecognitionResult(response) {
+    var parsed = JSON.parse(response.responseText);
+
+    if (parsed.images !== null && parsed.images !== undefined) {
+        var candidates = parsed.images[0].candidates;
+        var transactionMessage = parsed.images[0].transaction.message;
+
+        console.log("Recognition error message: " + transactionMessage);
+        console.log(candidates);
+
+        if (candidates !== null && candidates !== undefined) {
+            var candidate = candidates[0].subject_id;
+            var confidence = candidates[0].confidence;
+            console.log(candidate + ":" + confidence);
+            $('#recognitionKairos').text(candidate + " (" + confidence + ")");
+        }
+        if (transactionMessage !== null && transactionMessage !== undefined) {
+            console.log("Recognition error: " + transactionMessage);
+            $('#recognitionKairos').text(transactionMessage);
+        }
+
+
+        // console.log(candidates[0]);
+        // for (var i = 0; i < candidates.length; i++) {
+        //     console.log(candidates[i]);
+        // }
+
+    } else if (parsed.Errors !== null) {
+        var recError = parsed.Errors[0].Message;
+        console.log("Error: " + recError);
+
+        $('#recognitionKairos').text(recError);
+        $('#numOfFacesKairos').text('unknown');
+        $('#genderKairos').text('unknown');
+        $('#glassesKairos').text('unknown');
+    }
+}
+
+
+function validEmail(email)
+{
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
 }
