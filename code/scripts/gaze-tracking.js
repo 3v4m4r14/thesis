@@ -10,7 +10,7 @@ var Demo = {
     },
 
     ready: function () {
-        // xLabs.setConfig( 'calibration.clear', '1' ); // this also clears the memory buffer
+        xLabs.setConfig( 'calibration.clear', '1' ); // this also clears the memory buffer
         xLabs.setConfig('system.mode', 'learning');
         xLabs.setConfig('browser.canvas.paintHeadPose', '0');
 

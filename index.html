@@ -25,7 +25,7 @@
 
 <body>
 
-<!--<h3 id="target">X</h3>-->
+<h3 id="target">X</h3>
 
 <div class="container-fluid">
 
@@ -39,10 +39,12 @@
                     <h5 class="modal-title">Please make sure you are alone</h5>
                 </div>
                 <div class="modal-body">
-                    <p>We identified another face in your video frame. This is not allowed.<br>Please make sure you are
+                    <p>We identified another face in your video frame. This is not allowed.<br>Please make sure you
+                        are
                         the
                         only person in front of the screen.</p>
-                    <p>This warning might also be triggered by a colourful or detailed background. To avoid seeing this
+                    <p>This warning might also be triggered by a colourful or detailed background. To avoid seeing
+                        this
                         message again, move to somewhere with a plain background.</p>
                 </div>
                 <div class="modal-footer">
@@ -64,12 +66,13 @@
                     <form>
                         <div class="form-group">
                             <label for="candidateEmail">Email address</label>
-                            <input type="email" class="form-control" id="candidateEmail" aria-describedby="loginHelp" placeholder="Enter email" required>
+                            <input type="email" class="form-control" id="candidateEmail"
+                                   aria-describedby="loginHelp" placeholder="Email" required>
                             <small id="loginHelp" class="form-text"></small>
                         </div>
                         <!--<div class="form-group">-->
-                            <!--<label for="exampleInputPassword1">Password</label>-->
-                            <!--<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">-->
+                        <!--<label for="password">Password</label>-->
+                        <!--<input type="password" class="form-control" id="password" placeholder="Password" required>-->
                         <!--</div>-->
                         <button id="loginBtn" type="button" class="btn btn-primary">Log in</button>
                     </form>
@@ -78,12 +81,14 @@
         </div>
     </div>
 
-    <button id="kairosDetect" type="button">kairos detect</button>
-    <button id="kairosEnroll" type="button">kairos enroll</button>
-    <button id="kairosRecognise" type="button">kairos recognise</button>
-    <button id="kairosVerify" type="button">kairos verify</button>
-    <button id="kairosGalleryView" type="button">kairos gallery view</button>
-    <button id="kairosGalleryRemove" type="button">kairos gallery remove</button>
+    <div class="row">
+        <button id="kairosDetect" class="btn btn-sm btn-primary" type="button">kairos detect</button>
+        <button id="kairosEnroll" class="btn btn-sm btn-primary" type="button">kairos enroll</button>
+        <button id="kairosRecognise" class="btn btn-sm btn-primary" type="button">kairos recognise</button>
+        <button id="kairosVerify" class="btn btn-sm btn-primary" type="button">kairos verify</button>
+        <button id="kairosGalleryView" class="btn btn-sm btn-primary" type="button">kairos gallery view</button>
+        <button id="kairosGalleryRemove" class="btn btn-sm btn-primary" type="button">kairos gallery remove</button>
+    </div>
 
     <div class="row">
         <div class="col-md-4">
@@ -128,8 +133,11 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
+        <div id="gazeBox" class="col">
+            <button id="clicker" class="btn btn-sm btn-danger" type="button">Click</button>
+        </div>
+    </div>
 
     <video id="video" class="video-feed" width="320" height="240" preload autoplay loop muted></video>
     <canvas id="canvas" width="320" height="240"></canvas>
@@ -139,6 +147,7 @@
     </div>
     <canvas id="kairos-canvas">
     </canvas>
+
 
 </div>
 
@@ -157,7 +166,7 @@
 
 <script src="code/scripts/other.js" type="text/javascript"></script>
 <script src="code/scripts/face-detection.js" type="text/javascript"></script>
-<!--<script src="code/scripts/gaze-tracking.js" type="text/javascript"></script>-->
+<script src="code/scripts/gaze-tracking.js" type="text/javascript"></script>
 <script src="code/scripts/kairos.js" type="text/javascript"></script>
 <script src="code/scripts/speech.js" type="text/javascript"></script>
 

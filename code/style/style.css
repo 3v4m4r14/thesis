@@ -17,7 +17,15 @@ video, canvas {
     color: red;
     margin: 0;
     padding: 0;
-    left: 200px;
-    top: 200px;
+    left: 50%;
+    top: 30%;
     font-size: 48px;
+}
+
+#gazeBox {
+    border: 1px solid black ;
+}
+
+#clicker {
+    z-index: 999;
 }
